@@ -22,6 +22,7 @@ app.use('/users', usersRouter);
 let db;
 (async () => {
     try {
+        //connect to the database
         db = await mysql.createConnection({
             host: 'localhost',
             user: 'root',
@@ -72,3 +73,4 @@ let db;
 app.use(express.static(path.join(__dirname, 'public')));
 
 module.exports = app;
+
