@@ -18,6 +18,14 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
 // database connection setup
-
+(async () => {
+  try {
+    // Connect to the database
+    db = await mysql.createConnection({
+      host: 'localhost',
+      user: 'root',
+      password: '',
+      database: 'DogWalkService'
+    });
 
 module.exports = app;
