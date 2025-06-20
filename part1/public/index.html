@@ -5,7 +5,6 @@
   <title>Dog of the Day</title>
   <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
   <style>
-    /* Intentionally cluttered UI: */
     body {
       font-family: Arial, sans-serif;
       background: linear-gradient(135deg, #f0f0f0, #ffa500);
@@ -14,6 +13,7 @@
       margin: 0; padding: 0;
       overflow-x: hidden;
     }
+
     .container {
       width: 90vw;
       margin: 0 auto;
@@ -31,16 +31,17 @@
       gap: 40px;
       justify-content: center;
     }
+
     img {
       width: 400px;
       height: 300px;
       object-fit: cover;
-      border-radius: 0; /* no rounding */
+      border-radius: 0;
       border: 7px dashed lime;
       filter: saturate(2);
       cursor: pointer;
-      /* Intentionally small clickable area and no hover */
     }
+
     .details {
       width: 400px;
       font-size: 22px;
@@ -52,10 +53,12 @@
       border-left: 7px dotted white;
       padding-left: 20px;
     }
+
     @keyframes blink {
-      0%, 100% {opacity: 1;}
-      50% {opacity: 0.4;}
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
     }
+
     a {
       color: #ffff00;
       text-decoration: none;
@@ -69,16 +72,16 @@
     <h1>Dog of the Day</h1>
     <div class="container" aria-label="Dog of the day details and picture">
       <img
-        src="https://dog.ceo/api/breeds/image/random"
         :src="dogImage"
         alt="Random dog image"
         tabindex="0"
-        @click="alert('Thanks for clicking the dog!')"
-        @keydown.enter="alert('You pressed Enter on the dog image!')"
+        role="button"
+        @click="handleClick"
+        @keydown.enter="handleClick"
       />
       <div class="details" tabindex="0" aria-live="polite" aria-atomic="true">
         <p><strong>Name:</strong> Sparky</p>
-        <p><strong>Breed:</strong> Norwegian Buhund</p>
+        <p><strong>Breed:</strong> {{ breed }}</p>
         <p><strong>Age:</strong> 3 years old</p>
         <p><strong>Fun Fact:</strong> Loves to run in circles!</p>
         <p>
@@ -91,28 +94,41 @@
   </div>
 
   <script>
-    const { createApp, ref, onMounted } = Vue;
+    const { createApp, ref, computed, onMounted } = Vue;
 
     createApp({
       setup() {
-        const dogImage = ref('https://dog.ceo/api/breeds/image/random');
+        const dogImage = ref('');
 
-        async function fetchDogImage() {
+        const fetchDogImage = async () => {
           try {
             const res = await fetch('https://dog.ceo/api/breeds/image/random');
             const data = await res.json();
             dogImage.value = data.message;
           } catch (error) {
-            dogImage.value = 'https://dog.ceo/api/breeds/image/random';
+            console.error("Failed to load image:", error);
+            dogImage.value = 'https://images.dog.ceo/breeds/terrier-norwich/n02094258_343.jpg';
           }
-        }
+        };
 
-        onMounted(() => {
-          fetchDogImage();
+        const handleClick = () => {
+          alert('Thanks for clicking the dog!');
+        };
+
+        const breed = computed(() => {
+          const match = dogImage.value.match(/breeds\/([^/]+)\//);
+          if (match) {
+            return match[1].replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+          }
+          return 'Unknown';
         });
+
+        onMounted(fetchDogImage);
 
         return {
           dogImage,
+          handleClick,
+          breed
         };
       }
     }).mount('#app');
