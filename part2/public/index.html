@@ -10,21 +10,18 @@
 </head>
 
 <body class="bg-light">
-
-  <div id="app" class="container py-5">
-    <h1 class="mb-4 text-primary">{{ message }}</h1>
-    <form @submit.prevent="login" class="my-4">
-      <div class="mb-3">
-        <label for="email" class="form-label">Email</label>
-        <input type="email" v-model="email" class="form-control" id="email" required>
-      </div>
-      <div class="mb-3">
-        <label for="password" class="form-label">Password</label>
-        <input type="password" v-model="password" class="form-control" id="password" required>
-      </div>
-      <button type="submit" class="btn btn-primary">Login</button>
-      <p class="text-danger mt-2">{{ error }}</p>
-    </form>
+<form @submit.prevent="login" class="my-4">
+  <div class="mb-3">
+    <label for="username" class="form-label">Username</label>
+    <input type="text" v-model="username" class="form-control" id="username" required>
+  </div>
+  <div class="mb-3">
+    <label for="password" class="form-label">Password</label>
+    <input type="password" v-model="password" class="form-control" id="password" required>
+  </div>
+  <button type="submit" class="btn btn-primary">Login</button>
+  <p class="text-danger mt-2">{{ error }}</p>
+</form>
   <!-- <div>
       <p class="lead">Connect with trusted walkers for your beloved dog!</p>
       <a href="owner-dashboard.html" class="btn btn-outline-primary me-2">Owner Dashboard</a>
