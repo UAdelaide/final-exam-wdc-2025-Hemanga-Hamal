@@ -32,6 +32,9 @@ let db;
 
     app.locals.db = db;
 
+    //sample data because i am smart and this prac sucks
+    const 
+
 })();
 
 app.use(express.static(path.join(__dirname, 'public')));
