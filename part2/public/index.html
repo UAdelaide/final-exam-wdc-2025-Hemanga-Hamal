@@ -51,12 +51,13 @@
         </thead>
         <tbody>
           <tr v-for="dog in dogs" :key="dog.dog_id">
-            <td>
-              <img :src="dog.photo" alt="Dog Photo" class="img-thumbnail" style="width: 100px; height: 100px; object-fit: cover;">
-            </td>
+
             <td>{{ dog.dog_name }}</td>
             <td>{{ dog.size }}</td>
             <td>{{ dog.user_id }}</td>
+                        <td>
+              <img :src="dog.photo" alt="Dog Photo" class="img-thumbnail" style="width: 100px; height: 100px; object-fit: cover;">
+            </td>
           </tr>
         </tbody>
       </table>
