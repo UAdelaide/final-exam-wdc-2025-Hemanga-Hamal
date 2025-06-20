@@ -30,7 +30,9 @@ let db;
             database: 'dogwalks'
     });
 
+    app.locals.db = db;
 
+})();
 
 app.use(express.static(path.join(__dirname, 'public')));
 
