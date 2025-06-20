@@ -74,106 +74,103 @@
     </div>
     <p v-else>No walk requests yet.</p>
   </div>
-  <script>
-    const { createApp, ref, onMounted } = Vue;
+<script>
+  const { createApp, ref, onMounted } = Vue;
 
-    createApp({
-      setup() {
-        const form = ref({
-          dog_id: '',
-          requested_time: '',
-          duration_minutes: '',
-          location: ''
-        });
+  createApp({
+    setup() {
+      const form = ref({
+        dog_id: '',
+        requested_time: '',
+        duration_minutes: '',
+        location: ''
+      });
 
-        const walks = ref([]);
-        const message = ref('');
-        const error = ref('');
+      const walks = ref([]);
+      const owned_dogs = ref([]);
+      const message = ref('');
+      const error = ref('');
 
-        async function loadWalks() {
-          try {
-            const res = await fetch('/api/walks');
-            walks.value = await res.json();
-          } catch (err) {
-            error.value = 'Failed to load walk requests';
-          }
+      async function loadWalks() {
+        try {
+          const res = await fetch('/api/walks');
+          walks.value = await res.json();
+        } catch (err) {
+          error.value = 'Failed to load walk requests';
         }
-
-        async function submitWalkRequest() {
-          try {
-            const res = await fetch('/api/walks', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(form.value)
-            });
-            const result = await res.json();
-
-            if (!res.ok) throw new Error(result.error || 'Error submitting walk request');
-
-            message.value = result.message;
-            error.value = '';
-            form.value = {
-              dog_id: '',
-              requested_time: '',
-              duration_minutes: '',
-              location: ''
-            };
-            loadWalks();
-          } catch (err) {
-            error.value = err.message;
-            message.value = '';
-          }
-        }
-
-        async function loadDogs() {
-          try {
-            // fetches the dog data
-            const res = await fetch('/api/users/dogs');
-            if (res.ok) {
-              dogs.value = await res.json();
-            } else {
-              error.value = 'Failed to load dog names';
-            }
-          } catch (err) {
-            error.value = 'Error fetching';
-          }
-        }
-
-        onMounted(() => {
-          loadWalks();
-          // Add logout functionality
-          const logoutBtn = document.getElementById('logoutBtn');
-          if (logoutBtn) {
-            logoutBtn.addEventListener('click', async () => {
-              try {
-                const response = await fetch('/api/users/logout', {
-                  method: 'POST',
-                  credentials: 'include'
-                });
-                if (response.ok) {
-                  window.location.href = '/index.html';
-                } else {
-                  alert('Logout failed.');
-                }
-              } catch (err) {
-                alert('Logout failed: ' + err.message);
-              }
-            });
-          }
-        });
-
-        return {
-          form,
-          walks,
-          message,
-          error,
-          submitWalkRequest
-        };
       }
 
-    }).mount('#app');
+      async function loadDogs() {
+        try {
+          const res = await fetch('/api/users/choosedog');
+          if (!res.ok) throw new Error('Failed to load dog list');
+          owned_dogs.value = await res.json();
+        } catch (err) {
+          error.value = 'Error loading dogs';
+        }
+      }
 
-  </script>
+      async function submitWalkRequest() {
+        try {
+          const res = await fetch('/api/walks', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(form.value)
+          });
+
+          const result = await res.json();
+          if (!res.ok) throw new Error(result.error || 'Error submitting walk request');
+
+          message.value = result.message;
+          error.value = '';
+          form.value = {
+            dog_id: '',
+            requested_time: '',
+            duration_minutes: '',
+            location: ''
+          };
+          loadWalks();
+        } catch (err) {
+          error.value = err.message;
+          message.value = '';
+        }
+      }
+
+      onMounted(() => {
+        loadWalks();
+        loadDogs();
+
+        const logoutBtn = document.getElementById('logoutBtn');
+        if (logoutBtn) {
+          logoutBtn.addEventListener('click', async () => {
+            try {
+              const response = await fetch('/api/users/logout', {
+                method: 'POST',
+                credentials: 'include'
+              });
+              if (response.ok) {
+                window.location.href = '/index.html';
+              } else {
+                alert('Logout failed.');
+              }
+            } catch (err) {
+              alert('Logout failed: ' + err.message);
+            }
+          });
+        }
+      });
+
+      return {
+        form,
+        walks,
+        owned_dogs,
+        message,
+        error,
+        submitWalkRequest
+      };
+    }
+  }).mount('#app');
+</script>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
