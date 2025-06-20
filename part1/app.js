@@ -27,7 +27,7 @@ let db;
             host: 'localhost',
             user: 'root',
             password: '',
-            database: 'dogwalks'
+            database: 'DogWalkService'
     });
 
     app.locals.db = db;
