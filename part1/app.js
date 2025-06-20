@@ -33,16 +33,28 @@ let db;
     app.locals.db = db;
 
     //sample data because i am smart and this prac sucks
-    const [[{count;userCount}]] = await db.query('SELECT COUNT(*) AS userCount FROM Users');
-    if (userCount === 0) {'
-        'INSERT INTO Users (username, email, password_hash, role) VALUES
+    const [[{ count: userCount }]] = await db.execute('SELECT COUNT(*) as count FROM Users');
+    if (userCount === 0) {
+      await db.execute(`
+        INSERT INTO Users (username, email, password_hash, role) VALUES
         ('alice123', 'alice@example.com', 'hashed123', 'owner'),
         ('bobwalker', 'bob@example.com', 'hashed456', 'walker'),
         ('carol123', 'carol@example.com', 'hashed789', 'owner'),
         ('newwalker', 'new@example.com', 'hashed999', 'walker'),
         ('emilyowner', 'emily@example.com', 'hashed888', 'owner')
-      '');
+      `);
     }
+
+    const [[{ count: dogCount }]] = await db.execute('SELECT COUNT(*) as count FROM Dogs');
+    if (dogCount === 0) {
+      await db.execute(`
+        INSERT INTO Dogs (name, size, owner_id) VALUES
+        ('Max', 'medium', (SELECT user_id FROM Users WHERE username='alice123')),
+        ('Bella', 'small', (SELECT user_id FROM Users WHERE username='carol123')),
+        ('Rocky', 'large', (SELECT user_id FROM Users WHERE username='alice123'))
+      `);
+    }
+
 })();
 
 app.use(express.static(path.join(__dirname, 'public')));
