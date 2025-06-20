@@ -31,7 +31,7 @@
     </div>
   </div>
 
-  <script>
+<script>
     const { createApp } = Vue;
     createApp({
       data() {
@@ -45,9 +45,8 @@
       methods: {
         async login() {
           this.error = '';
-
           try {
-            const response = await fetch('/api/users/login', {
+            const res = await fetch('/api/users/login', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json'
@@ -55,22 +54,20 @@
               body: JSON.stringify({
                 username: this.username,
                 password: this.password
-              })
+              }),
             });
-
-            const data = await response.json();
-
-            if (response.ok) {
-              if (data.user.role === 'owner') {
+            const resultRes = await res.json();
+            if (res.ok) {
+              if (resultRes.user.role === 'owner') {
                 window.location.href = 'owner-dashboard.html';
               } else {
                 window.location.href = 'walker-dashboard.html';
               }
             } else {
-              this.error = data.error;
+              this.error = resultRes.error;
             }
-          } catch (error) {
-            this.error = 'Login failed';
+          } catch (err) {
+            this.error = 'Error Logging In';
           }
         }
       }
