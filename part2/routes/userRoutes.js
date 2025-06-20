@@ -65,8 +65,6 @@ router.post('/login', async (req, res) => {
   }
 });
 
-module.exports = router;
-
 // POST logout - Added logout functionality
 router.post('/logout', (req, res) => {
   req.session.destroy((err) => {
