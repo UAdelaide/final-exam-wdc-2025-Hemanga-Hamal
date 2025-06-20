@@ -2,134 +2,101 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Dog of the Day</title>
+  <title>Dog of the Day - Broken UX Example</title>
   <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #f0f0f0, #ffa500);
-      color: white;
-      text-shadow: 1px 1px 2px black;
-      margin: 0; padding: 0;
-      overflow-x: hidden;
-    }
-
-    .container {
-      width: 90vw;
-      margin: 0 auto;
-      padding: 20px;
+      font-family: cursive; /* Decorative and harder to read font */
       background: repeating-linear-gradient(
         45deg,
-        #333,
-        #333 10px,
-        #444 10px,
-        #444 20px
-      );
-      border: 10px double #ffa500;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 40px;
-      justify-content: center;
+        #f06,
+        #f06 10px,
+        #ff0 10px,
+        #ff0 20px
+      ); /* Distracting background pattern */
     }
-
-    img {
-      width: 400px;
-      height: 300px;
-      object-fit: cover;
-      border-radius: 0;
-      border: 7px dashed lime;
-      filter: saturate(2);
+    .dog-image {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%; /* circular image that crops part of the dog */
+      border: 10px dashed red; /* flashy border */
+      margin: 20px;
+      animation: shake 0.5s infinite alternate;
+    }
+    @keyframes shake {
+      0% { transform: translate(2px, 2px) rotate(1deg); }
+      100% { transform: translate(-2px, -2px) rotate(-1deg); }
+    }
+    button {
+      margin-top: 10px;
+      font-size: 8px; /* very small, hard to click */
+      padding: 2px;
+      background-color: lime;
+      color: black;
+      border: none;
       cursor: pointer;
     }
-
-    .details {
-      width: 400px;
-      font-size: 22px;
-      line-height: 0.8;
-      user-select: none;
-      animation: blink 0.5s infinite;
-      max-height: 150px;
-      overflow: hidden;
-      border-left: 7px dotted white;
-      padding-left: 20px;
-    }
-
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.4; }
-    }
-
-    a {
-      color: #ffff00;
-      text-decoration: none;
-      font-weight: 900;
-      animation: blink 1s infinite;
+    .extra-info {
+      font-size: 5px; /* very small text */
+      color: yellow;
+      user-select: none; /* can’t copy */
+      pointer-events: none; /* text can’t be selected or focused */
     }
   </style>
 </head>
 <body>
   <div id="app">
-    <h1>Dog of the Day</h1>
-    <div class="container" aria-label="Dog of the day details and picture">
-      <img
-        src="dogImage"
-        alt="Random dog image"
-        tabindex="0"
-        role="button"
-        @click="handleClick"
-        @keydown.enter="handleClick"
-      />
-      <div class="details" tabindex="0" aria-live="polite" aria-atomic="true">
-        <p><strong>Name:</strong> Sparky</p>
-        <p><strong>Breed:</strong> {{ breed }}</p>
-        <p><strong>Age:</strong> 3 years old</p>
-        <p><strong>Fun Fact:</strong> Loves to run in circles!</p>
-        <p>
-          Visit the
-          <a href="https://dog.ceo/dog-api/" target="_blank" rel="noopener noreferrer">Dog API</a>
-          for more dog pics!
-        </p>
-      </div>
-    </div>
+    <h1 style="color: #ff00ff; text-shadow: 2px 2px 0 black;">Dog of the Day 🐶</h1>
+
+    <img
+      :src="dogImage"
+      alt="Random Dog Picture"
+      class="dog-image"
+      aria-hidden="true"
+    />
+
+    <!-- Hardcoded dog info that has no connection with the image -->
+    <p>
+      Meet <strong>Fluffy</strong>, the <em>invisible</em> dog!
+      Age: <span class="extra-info">-100 years</span>
+      Size: <span class="extra-info">Gigantic</span>
+    </p>
+
+    <!-- Tiny button with unclear label -->
+    <button @click="fetchDogImage" aria-label="Reload dog image">Go!</button>
+
+    <!-- Lots of redundant instructions -->
+    <p class="extra-info">
+      Click the green button above to see a new dog picture.
+      Or don’t.
+      It’s your choice.
+      This text is not selectable and very small.
+    </p>
   </div>
 
   <script>
-    const { createApp, ref, computed, onMounted } = Vue;
+    const { createApp } = Vue;
 
     createApp({
-      setup() {
-        const dogImage = ref('');
-
-        const fetchDogImage = async () => {
-          try {
-            const res = await fetch('https://dog.ceo/api/breeds/image/random');
-            const data = await res.json();
-            dogImage.value = data.message;
-          } catch (error) {
-            console.error("Failed to load image:", error);
-            dogImage.value = 'https://images.dog.ceo/breeds/terrier-norwich/n02094258_343.jpg';
-          }
-        };
-
-        const handleClick = () => {
-          alert('Thanks for clicking the dog!');
-        };
-
-        const breed = computed(() => {
-          const match = dogImage.value.match(/breeds\/([^/]+)\//);
-          if (match) {
-            return match[1].replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
-          }
-          return 'Unknown';
-        });
-
-        onMounted(fetchDogImage);
-
+      data() {
         return {
-          dogImage,
-          handleClick,
-          breed
-        };
+          dogImage: '',
+        }
+      },
+      methods: {
+        fetchDogImage() {
+          fetch('https://dog.ceo/api/breeds/image/random')
+            .then(res => res.json())
+            .then(data => {
+              this.dogImage = data.message;
+            })
+            .catch(() => {
+              this.dogImage = '';
+            });
+        }
+      },
+      mounted() {
+        this.fetchDogImage();
       }
     }).mount('#app');
   </script>
