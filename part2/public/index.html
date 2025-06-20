@@ -12,10 +12,11 @@
 <body class="bg-light">
 
   <div id="app" class="container py-5">
+    <h1 class="mb-4 text-primary">{{ message }}</h1>
     <form @submit.prevent="login" class="my-4">
       <div class="mb-3">
-        <label for="username" class="form-label">Username</label>
-        <input type="text" v-model="username" class="form-control" id="username" required>
+        <label for="email" class="form-label">Email</label>
+        <input type="email" v-model="email" class="form-control" id="email" required>
       </div>
       <div class="mb-3">
         <label for="password" class="form-label">Password</label>
