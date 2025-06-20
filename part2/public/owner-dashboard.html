@@ -102,7 +102,7 @@
 
       async function loadDogs() {
         try {
-          const res = await fetch('/api/users/choosedog');
+          const res = await fetch('/api/users/dogs');
           if (!res.ok) throw new Error('Failed to load dog list');
           owned_dogs.value = await res.json();
         } catch (err) {
