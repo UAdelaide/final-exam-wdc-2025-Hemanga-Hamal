@@ -6,7 +6,7 @@ const mysql = require('mysql2/promise');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-const apiRouter = require('./routes/api');
+var apiRouter = require('./routes/api');
 
 var app = express();
 
@@ -33,7 +33,7 @@ let db;
 
     app.locals.db = db;
 
-    //sample data because i am smart and this prac sucks
+    // sample data because i am smart and this prac sucks
     const [[{ count: userCount }]] = await db.execute('SELECT COUNT(*) as count FROM Users');
     if (userCount === 0) {
       await db.execute(`
