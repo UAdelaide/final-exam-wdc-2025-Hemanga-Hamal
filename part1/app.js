@@ -25,9 +25,9 @@ let db;
         db = await mysql.createConnection({
             host: 'localhost',
             user: 'root',
-            password: '', // replace with your database password
-            database: 'dogwalks' // replace with your database name
-    }
+            password: '',
+            database: 'dogwalks'
+    });
 
 app.use(express.static(path.join(__dirname, 'public')));
 
