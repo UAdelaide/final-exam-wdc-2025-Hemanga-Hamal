@@ -130,19 +130,6 @@
       }
     }).mount('#app');
   </script>
-  <script>
-  document.getElementById('logoutBtn').addEventListener('click', async () => {
-    const response = await fetch('/logout', {
-      method: 'POST',
-      credentials: 'include'
-    });
-    if (response.ok) {
-      window.location.href = '/index.html';
-    } else {
-      alert('Logout failed.');
-    }
-  });
-  </script>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
