@@ -35,8 +35,25 @@
   <!-- Dogs Table -->
   <div class="mt-5">
     <h3>All Dogs in the System</h3>
+    <table class="table table-bordered mt-3" v-if="dogs.length > 0">
+      <thead class="table-light">
+        <tr>
+          <th>Photo</th>
+          <th>Name</th>
+          <th>Size</th>
+          <th>Owner ID</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="dog in dogs" :key="dog.dog_id">
+          <td>{{ dog.dog_name }}</td>
+          <td>{{ dog.size }}</td>
+          <td>{{ dog.user_id }}</td>
+          <td> <img :src="dog.photo" alt="Dog Photo" class="img-thumbnail" style="width: 100px;"></td>
+        </tr>
+      </tbody>
+    </table>
   </div>
-  
 
   <script>
     const { createApp } = Vue;
