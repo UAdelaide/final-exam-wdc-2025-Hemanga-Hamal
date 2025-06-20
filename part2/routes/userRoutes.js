@@ -84,18 +84,18 @@ router.post('/logout', (req, res) => {
   });
 });
 
+// GET the dogs data where the owner's id matches to their owned dogs
+router.get('/dogs', async (req, res) => {
+  const ownerID = req.session.user.user_id;
+  try {
+    const [rows] = await db.query('SELECT dog_id, name FROM Dogs WHERE owner_id = ?', [ownerID]);
+    res.json(rows);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch Dogs' });
+  }
+});
+
+
 module.exports = router;
 
-    // GET /api/dogs
-    router.get('/dogs', async (req, res) => {
-      try {
-        const [rows] = await db.query(`
-          SELECT Dogs.name AS dog_name, Dogs.size, Users.username AS owner_username
-          FROM Dogs
-          JOIN Users ON Dogs.owner_id = Users.user_id
-        `);
-        res.json(rows);
-      } catch (err) {
-        res.status(500).json({ error: 'Failed to fetch dogs' });
-      }
-    });
+
