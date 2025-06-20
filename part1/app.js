@@ -2,6 +2,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const mysql = require('mysql2/promise');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -22,7 +23,7 @@ app.use('/users', usersRouter);
 let db;
 (async () => {
     try {
-        //connect to the database
+        // connect to the database
         db = await mysql.createConnection({
             host: 'localhost',
             user: 'root',
