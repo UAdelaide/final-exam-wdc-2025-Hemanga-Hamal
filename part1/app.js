@@ -64,7 +64,7 @@ let db;
     }
 
   } catch (err) {
-    console.error('Database setup error:', err);
+
   }
 })();
 
