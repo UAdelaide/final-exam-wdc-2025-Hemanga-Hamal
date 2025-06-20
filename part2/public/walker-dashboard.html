@@ -82,7 +82,7 @@
           loadWalkRequests();
         });
 
-        // ADDED to the Vue.js setup function (before the return statement):
+        // logout function
         async function logout() {
           try {
             const response = await fetch('/api/users/logout', {
