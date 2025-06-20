@@ -56,3 +56,23 @@ router.post('/login', async (req, res) => {
 });
 
 module.exports = router;
+
+// POST login (stores user info in session)
+router.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const [rows] = await db.query(`
+      SELECT user_id, username, role FROM Users
+      WHERE email = ? AND password_hash = ?
+    `, [email, password]);
+    if (rows.length === 0) {
+      return res.status(401).json({ error: 'Invalid credentials' });
+    }
+
+    const user = rows[0];
+    req.session.user = user; // Save user to session
+    res.json({ message: 'Login successful', user });
+  } catch (error) {
+    res.status(500).json({ error: 'Login failed' });
+  }
+});
