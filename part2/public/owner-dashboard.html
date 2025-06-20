@@ -119,6 +119,7 @@
         onMounted(() => {
           loadWalks();
         });
+
         // Logout functionality
         document.getElementById('logoutBtn').addEventListener('click', async () => {
           try {
@@ -127,7 +128,7 @@
               credentials: 'include'
             });
             if (response.ok) {
-              window.location.href = '/index.html'; // Redirect to login
+              window.location.href = '/index.html';
             } else {
               alert('Logout failed.');
             }
