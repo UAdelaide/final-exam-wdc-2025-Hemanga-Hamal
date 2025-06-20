@@ -114,7 +114,6 @@
           this.error = null;
 
           try {
-            // Try the Dog CEO API first
             const response = await fetch('https://dog.ceo/api/breeds/image/random');
 
             if (!response.ok) {
@@ -132,7 +131,6 @@
             }
           } catch (apiError) {
             console.warn('Dog CEO API failed, using fallback:', apiError);
-            // Fallback to a reliable dog image service
             this.useFallbackImage();
           } finally {
             this.loading = false;
@@ -140,7 +138,6 @@
         },
 
         useFallbackImage() {
-          // Using a more reliable service with CORS support
           const dogId = Math.floor(Math.random() * 1000) + 1;
           this.dogImage = `https://picsum.photos/200/200?random=${dogId}`;
           this.dogName = this.generateDogName();
@@ -148,7 +145,6 @@
         },
 
         extractBreedInfo(imageUrl) {
-          // Extract breed from the URL path
           const urlParts = imageUrl.split('/');
           const breedIndex = urlParts.findIndex(part => part === 'breeds') + 1;
           if (breedIndex > 0 && breedIndex < urlParts.length) {
