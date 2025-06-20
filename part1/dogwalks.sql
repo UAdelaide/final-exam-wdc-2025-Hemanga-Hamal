@@ -22,7 +22,7 @@ CREATE TABLE WalkRequests (
     request_id INT AUTO_INCREMENT PRIMARY KEY,
     dog_id INT NOT NULL,
     requested_time DATETIME NOT NULL,
-    duration_minutes INT NOT NULL,
+    duration_minutes INT NOT NULL,z
     location VARCHAR(255) NOT NULL,
     status ENUM('open', 'accepted', 'completed', 'cancelled') DEFAULT 'open',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
