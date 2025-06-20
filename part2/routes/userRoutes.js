@@ -99,6 +99,19 @@ router.get('/dogs', async (req, res) => {
 
 // Function to get the current user's ID from the session
 async function getCurrentUser() {
+  try {
+    const res = await fetch('/api/users/me');
+    if (!res.ok) throw new Error('Failed to fetch current user');
+    const user = await res.json();
+    return user.user_id;  // assuming the returned JSON has { user_id, ... }
+  } catch (err) {
+    console.error('Error in getCurrentUser:', err);
+    throw err;
+  }
+}
+
+
+async function getCurrentUser() {
           try {
             const response = await fetch('/api/users/me');
             if (!response.ok) throw new Error(result.error || 'get current user failed');
@@ -108,4 +121,4 @@ async function getCurrentUser() {
           } catch (err) {
             error.value = err.message;
           }
-        }
+}
