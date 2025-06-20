@@ -27,8 +27,13 @@
 
             <!-- Dog ID drop down -->
             <label class="form-label">Dog ID</label>
-            <input v-model="form.dog_id" type="number" class="form-control" required>
-            
+            <select v-model="form.dog_id" class="form-control" required>
+              <option disabled value="">Please select a dog</option>
+              <option v-for="dog in dogs" :key="dog.id" :value="dog.id">
+                {{ dog.name }} (ID: {{ dog.id }})
+              </option>
+            </select>
+
           </div>
           <div class="mb-3">
             <label class="form-label">Requested Date & Time</label>
