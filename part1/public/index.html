@@ -105,19 +105,12 @@
           }
         },
 
+        useFallbackImage() {
+          const dogId = Math.floor(Math.random() * 1000) + 1;
+          this.dogImage = `https://picsum.photos/200/200?random=${dogId}`;
+          this.dogName = this.generateDogName();
+          this.breedInfo = 'Mixed breed cutie';
         },
-
-        extractBreedInfo(imageUrl) {
-          const urlParts = imageUrl.split('/');
-          const breedIndex = urlParts.findIndex(part => part === 'breeds') + 1;
-          if (breedIndex > 0 && breedIndex < urlParts.length) {
-            const breed = urlParts[breedIndex].split('-').join(' ');
-            this.breedInfo = breed.charAt(0).toUpperCase() + breed.slice(1);
-          } else {
-            this.breedInfo = 'Beautiful mixed breed';
-          }
-        },
-
         generateDogName() {
           const names = [
             'Buddy', 'Bella', 'Max', 'Luna', 'Charlie', 'Lucy', 'Cooper', 'Daisy',
