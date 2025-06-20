@@ -80,6 +80,33 @@
           loadWalkRequests();
         });
 
+      // ADDED to the Vue.js setup function (before the return statement):
+async function logout() {
+  try {
+    const response = await fetch('/api/users/logout', {
+      method: 'POST',
+      credentials: 'include'
+    });
+
+    if (response.ok) {
+      window.location.href = '/index.html';
+    } else {
+      alert('Logout failed.');
+    }
+  } catch (err) {
+    alert('Logout failed: ' + err.message);
+  }
+}
+
+// ADDED to the return object:
+return {
+  walks,
+  message,
+  error,
+  applyToWalk,
+  logout  // <-- Added this line
+};
+
         return {
           walks,
           message,
