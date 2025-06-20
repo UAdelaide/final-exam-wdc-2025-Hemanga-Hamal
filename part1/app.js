@@ -65,8 +65,7 @@ let db;
     }
 
   } catch (err) {
-        console.error('Database connection failed:', err);
-        process.exit(1); // Exit the process if database connection fails
+        throw new Error('Database connection failed: ' + err.message);
   }
 })();
 
