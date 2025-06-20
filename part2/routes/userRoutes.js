@@ -88,16 +88,11 @@ module.exports = router;
 
 // GET the dogs data where the owner's id matches to their owned dogs
 router.get('/dogs', async (req, res) => {
-  const ownerID = req.session.user?.user_id;  // safe access
-  if (!ownerID) {
-    return res.status(401).json({ error: 'Not authenticated' });
-  }
-
+  const ownerID = req.session.user.user_id;
   try {
     const [rows] = await db.query('SELECT dog_id, name FROM Dogs WHERE owner_id = ?', [ownerID]);
     res.json(rows);
   } catch (error) {
-    console.error('DB error:', error);  // log full error
     res.status(500).json({ error: 'Failed to fetch Dogs' });
   }
 });
