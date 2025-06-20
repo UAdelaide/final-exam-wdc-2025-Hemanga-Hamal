@@ -34,6 +34,7 @@ let db;
 
     //sample data because i am smart and this prac sucks
     const [[{count;userCount}]] = await db.query('SELECT COUNT(*) AS userCount FROM Users');
+    
 
 })();
 
