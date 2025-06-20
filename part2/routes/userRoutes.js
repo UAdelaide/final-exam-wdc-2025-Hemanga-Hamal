@@ -109,16 +109,3 @@ async function getCurrentUser() {
     throw err;
   }
 }
-
-
-async function getCurrentUser() {
-          try {
-            const response = await fetch('/api/users/me');
-            if (!response.ok) throw new Error(result.error || 'get current user failed');
-            const data = await response.json();
-            this.user = data.user_id;
-            return data.user_id;
-          } catch (err) {
-            error.value = err.message;
-          }
-}
