@@ -55,7 +55,21 @@ let db;
       `);
     }
 
+  const [[{ count: walkCount }]] = await db.execute('SELECT COUNT(*) as count FROM WalkRequests');
+    if (walkCount === 0) {
+      await db.execute(`
+        INSERT INTO WalkRequests (dog_id, requested_time, duration_minutes, location, status) VALUES
+        ((SELECT dog_id FROM Dogs WHERE name='Max'), '2025-06-10 08:00:00', 30, 'Parklands', 'open'),
+        ((SELECT dog_id FROM Dogs WHERE name='Bella'), '2025-06-10 09:30:00', 45, 'Beachside Ave', 'accepted')
+      `);
+    }
+
+  } catch (err) {
+        console.error('Database connection failed:', err);
+        process.exit(1); // Exit the process if database connection fails
+  }
 })();
+
 
 app.use(express.static(path.join(__dirname, 'public')));
 
