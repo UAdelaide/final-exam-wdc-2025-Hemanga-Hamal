@@ -41,8 +41,7 @@ let db;
         ('carol123', 'carol@example.com', 'hashed789', 'owner'),
         ('newwalker', 'new@example.com', 'hashed999', 'walker'),
         ('emilyowner', 'emily@example.com', 'hashed888', 'owner')
-      `
-
+      '');
 })();
 
 app.use(express.static(path.join(__dirname, 'public')));
