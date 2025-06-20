@@ -1,6 +1,9 @@
 const express = require('express');
 const path = require('path');
+// added question 17
 const db = require('./models/db');
+
+
 require('dotenv').config();
 
 const app = express();
