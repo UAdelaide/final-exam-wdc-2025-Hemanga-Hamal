@@ -98,7 +98,6 @@ router.get('/dogs', async (req, res) => {
 });
 
 // Function to get the current user's ID from the session
-
 async function getCurrentUser() {
           try {
             const response = await fetch('/api/users/me');
@@ -110,3 +109,4 @@ async function getCurrentUser() {
             error.value = err.message;
           }
 }
+
