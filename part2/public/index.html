@@ -61,10 +61,7 @@
 
             const data = await response.json();
 
-            // Store user info in sessionStorage (optional; session cookie should be set by server)
             sessionStorage.setItem('user', JSON.stringify(data.user));
-
-            // Redirect based on user role
             if (data.user.role === 'owner') {
               window.location.href = 'owner-dashboard.html';
             } else if (data.user.role === 'walker') {
