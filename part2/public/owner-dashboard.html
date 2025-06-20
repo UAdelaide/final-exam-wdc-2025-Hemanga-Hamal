@@ -63,7 +63,7 @@
     </div>
     <p v-else>No walk requests yet.</p>
   </div>
-
+  <button id="logoutBtn" class="btn btn-danger">Logout</button>
   <script>
     const { createApp, ref, onMounted } = Vue;
 
@@ -129,7 +129,6 @@
       }
     }).mount('#app');
   </script>
-
   <script>
   document.getElementById('logoutBtn').addEventListener('click', async () => {
     const response = await fetch('/logout', {
