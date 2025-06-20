@@ -10,7 +10,7 @@
 <body class="bg-light">
   <div id="app" class="container py-4">
     <h1 class="mb-4 text-primary">Owner Dashboard</h1>
-    
+
     <button id="logoutBtn" type="button" class="btn btn-danger">Logout</button>
 
     <!-- Walk request form -->
@@ -132,7 +132,7 @@
   </script>
   <script>
   document.getElementById('logoutBtn').addEventListener('click', async () => {
-    const response = await fetch('/logout', {
+    const response = await fetch(o'/logut', {
       method: 'POST',
       credentials: 'include'
     });
