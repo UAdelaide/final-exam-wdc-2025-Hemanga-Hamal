@@ -2,98 +2,55 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Dog of the Day - Fixed Version</title>
+  <title>Dog of the Day - Broken UX (Simple)</title>
   <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
   <style>
     body {
-      font-family: cursive;
-      background: repeating-linear-gradient(
-        45deg,
-        #f06,
-        #f06 10px,
-        #ff0 10px,
-        #ff0 20px
-      );
-      text-align: center;
+      background-color: #fff;
+      color: #ccc; /* Low contrast */
+      font-family: 'Comic Sans MS', cursive;
       padding: 20px;
+      text-align: center;
     }
-    .dog-image {
-      width: 200px;
-      height: 200px;
+
+    img {
+      width: 180px;
+      height: 180px;
       border-radius: 50%;
-      border: 10px dashed red;
-      margin: 20px;
-      animation: shake 0.5s infinite alternate;
-      object-fit: cover;
+      border: none;
+      margin: 10px;
     }
-    @keyframes shake {
-      0% { transform: translate(2px, 2px) rotate(1deg); }
-      100% { transform: translate(-2px, -2px) rotate(-1deg); }
-    }
+
     button {
-      margin-top: 10px;
-      font-size: 16px;
-      padding: 10px 20px;
-      background-color: lime;
-      color: black;
-      border: 2px solid black;
-      cursor: pointer;
-      font-weight: bold;
+      padding: 3px;
+      font-size: 10px; /* Hard to click (kinematic load) */
+      background: #eee;
+      border: none;
+      margin-top: 5px;
     }
-    button:hover {
-      background-color: #00ff00;
-      transform: scale(1.1);
-    }
-    .extra-info {
-      font-size: 12px;
-      color: yellow;
-    }
-    .loading {
-      font-size: 18px;
-      color: white;
-      font-weight: bold;
-    }
-    .error {
-      color: red;
-      font-weight: bold;
-      background: white;
-      padding: 10px;
-      border-radius: 5px;
-      display: inline-block;
+
+    .info {
+      font-size: 9px; /* Too small to easily read */
     }
   </style>
 </head>
 <body>
   <div id="app">
-    <h1 style="color: #ff00ff; text-shadow: 2px 2px 0 black;">Dog of the Day 🐶</h1>
+    <h1>🌭</h1> <!-- No descriptive heading -->
 
-    <div v-if="loading" class="loading">Loading adorable dog...</div>
+    <img
+      src=""
+      :src="dogImage || 'https://via.placeholder.com/180?text=Doggo'"
+      alt=""
+      aria-hidden="true"
+    />
 
-    <div v-else-if="error" class="error">
-      {{ error }}
-    </div>
-
-    <div v-else>
-      <img
-        :src="dogImage"
-        alt="Random Dog Picture"
-        class="dog-image"
-        @error="handleImageError"
-      />
-      <p>
-        Meet <strong>{{ dogName }}</strong>, today's featured pup!
-        <br>
-        <span class="extra-info">Breed: {{ breedInfo }}</span>
-      </p>
-    </div>
-
-    <button type="button" @click="fetchDogImage" :disabled="loading">
-      {{ loading ? 'Loading...' : 'Get New Dog!' }}
-    </button>
-
-    <p class="extra-info">
-      Click the button to see a new random dog picture!
+    <p class="info">
+      Here is <b>{{ dogName }}</b><br>
+      {{ randomFact }}
     </p>
+
+    <button @click="fetchDogImage">Do it</button>
   </div>
 
   <script>
@@ -103,77 +60,32 @@
         return {
           dogImage: '',
           dogName: '',
-          breedInfo: '',
-          loading: false,
-          error: null
-        }
+          randomFact: '',
+        };
       },
       methods: {
         async fetchDogImage() {
-          this.loading = true;
-          this.error = null;
-
-          try {
-            // Try the Dog CEO API first
-            const response = await fetch('https://dog.ceo/api/breeds/image/random');
-
-            if (!response.ok) {
-              throw new Error('API request failed');
-            }
-
-            const data = await response.json();
-
-            if (data.status === 'success' && data.message) {
-              this.dogImage = data.message;
-              this.extractBreedInfo(data.message);
-              this.generateDogName();
-            } else {
-              throw new Error('Invalid API response');
-            }
-          } catch (apiError) {
-            console.warn('Dog CEO API failed, using fallback:', apiError);
-            // Fallback to a reliable dog image service
-            this.useFallbackImage();
-          } finally {
-            this.loading = false;
-          }
+          const response = await fetch('https://dog.ceo/api/breeds/image/random');
+          const data = await response.json();
+          this.dogImage = data.message;
+          this.generateDogName();
+          this.randomFact = this.getRandomFact();
         },
-
-        useFallbackImage() {
-          // Using a more reliable service with CORS support
-          const dogId = Math.floor(Math.random() * 1000) + 1;
-          this.dogImage = `https://picsum.photos/200/200?random=${dogId}`;
-          this.dogName = this.generateDogName();
-          this.breedInfo = 'Mixed breed cutie';
-        },
-
-        extractBreedInfo(imageUrl) {
-          // Extract breed from the URL path
-          const urlParts = imageUrl.split('/');
-          const breedIndex = urlParts.findIndex(part => part === 'breeds') + 1;
-          if (breedIndex > 0 && breedIndex < urlParts.length) {
-            const breed = urlParts[breedIndex].split('-').join(' ');
-            this.breedInfo = breed.charAt(0).toUpperCase() + breed.slice(1);
-          } else {
-            this.breedInfo = 'Beautiful mixed breed';
-          }
-        },
-
         generateDogName() {
-          const names = [
-            'Buddy', 'Bella', 'Max', 'Luna', 'Charlie', 'Lucy', 'Cooper', 'Daisy',
-            'Rocky', 'Lola', 'Duke', 'Sadie', 'Tucker', 'Molly', 'Bear', 'Sophie',
-            'Oliver', 'Chloe', 'Zeus', 'Penny', 'Jack', 'Zoe', 'Bentley', 'Nala'
-          ];
-          return names[Math.floor(Math.random() * names.length)];
+          const names = ['Rex', 'Zoe', 'Borky', 'Sir Woofs', 'Tuna', 'Gremlin'];
+          this.dogName = names[Math.floor(Math.random() * names.length)];
         },
-
-        handleImageError() {
-          console.warn('Image failed to load, trying fallback');
-          this.useFallbackImage();
+        getRandomFact() {
+          const facts = [
+            'Hates Mondays.',
+            'Certified drama queen.',
+            'Loves peanut butter.',
+            'Actually a cat in disguise.',
+            'Thinks it’s a raccoon.',
+          ];
+          return facts[Math.floor(Math.random() * facts.length)];
         }
       },
-
       mounted() {
         this.fetchDogImage();
       }
