@@ -14,3 +14,7 @@ router.get('/dogs', async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch dogs' });
   }
 });
+
+// GET /api/walkrequests/open
+router.get('/walkrequests/open', async (req, res) => {
+
