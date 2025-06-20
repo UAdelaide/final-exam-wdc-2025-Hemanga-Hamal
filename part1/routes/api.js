@@ -18,4 +18,6 @@ router.get('/dogs', async (req, res) => {
 
 // GET /api/walkrequests/open
 router.get('/walkrequests/open', async (req, res) => {
+    
+}
 
