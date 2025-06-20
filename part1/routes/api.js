@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
+// GET /api/dogs
 router.get('/dogs', async (req, res) => {
   try {
     const db = req.app.locals.db;
