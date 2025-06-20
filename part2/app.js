@@ -34,7 +34,7 @@ app.use('/api/users', userRoutes);
 app.get('/api/dogs', async (req, res) => {
       try {
         const [rows] = await db.query(`
-          SELECT Dogs.name AS dog_name, Dogs.size, Users.username AS owner_username
+          SELECT ALL
           FROM Dogs
           JOIN Users ON Dogs.owner_id = Users.user_id
         `);
