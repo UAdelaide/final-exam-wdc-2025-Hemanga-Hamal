@@ -22,11 +22,11 @@ let db;
 (async () => {
     try {
         // connect to the database
-        db = await mysql.createConnection({
-            host: 'localhost',
-            user: 'root',
-            password: '',
-            database: 'DogWalkService'
+    db = await mysql.createConnection({
+        host: 'localhost',
+        user: 'root',
+        password: '',
+        database: 'dogwalks'
     });
 
     app.locals.db = db;
