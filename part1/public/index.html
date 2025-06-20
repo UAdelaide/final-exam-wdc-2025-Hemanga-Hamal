@@ -95,7 +95,7 @@
 
     createApp({
       setup() {
-        const dogImage = ref('https://via.placeholder.com/400x300?text=Loading...');
+        const dogImage = ref('https://dog.ceo/api/breeds/image/random');
 
         async function fetchDogImage() {
           try {
@@ -103,7 +103,7 @@
             const data = await res.json();
             dogImage.value = data.message;
           } catch (error) {
-            dogImage.value = 'https://via.placeholder.com/400x300?text=No+Image';
+            dogImage.value = 'https://dog.ceo/api/breeds/image/random';
           }
         }
 
