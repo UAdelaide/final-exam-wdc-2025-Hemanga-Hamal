@@ -59,6 +59,16 @@
             });
 
             const data = await response.json();
+
+            if (response.ok) {
+              if (data.user.role === 'owner') {
+                window.location.href = 'owner-dashboard.html';
+              } else {
+                window.location.href = 'walker-dashboard.html';
+              }
+            } else {
+              this.error = data.error;
+            }
           } catch (error) {
             this.error = 'Login failed';
           }
