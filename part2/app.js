@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+
 // added question 17
 const db = require('./models/db');
 
@@ -29,7 +30,7 @@ const userRoutes = require('./routes/userRoutes');
 app.use('/api/walks', walkRoutes);
 app.use('/api/users', userRoutes);
 
-
+// added question 17
 // GET /api/dogs
 app.get('/api/dogs', async (req, res) => {
       try {
