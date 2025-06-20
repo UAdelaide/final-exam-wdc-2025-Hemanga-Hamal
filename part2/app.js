@@ -16,11 +16,12 @@ app.use(express.static(path.join(__dirname, '/public')));
 const session = require('express-session');
 
 app.use(session({
-  secret: process.env.SESSION_SECRET || 'your-secret-key-here',
+  secret: 'your_secret_key',
   resave: false,
   saveUninitialized: false,
   cookie: { secure: false }
 }));
+
 
 
 // Routes
