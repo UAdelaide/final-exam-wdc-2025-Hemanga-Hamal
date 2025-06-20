@@ -2,7 +2,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-const mysql = require('mysql2/promise'); // Add this!
+const mysql = require('mysql2/promise');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -18,7 +18,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/api', apiRouter);  // Don't forget to add this if using api routes
+app.use('/api', apiRouter);
 
 let db;
 (async () => {
@@ -27,7 +27,7 @@ let db;
             host: 'localhost',
             user: 'root',
             password: '',
-            database: 'DogWalkService'  // Make sure this matches your DB
+            database: 'DogWalkService'
         });
 
         app.locals.db = db;
@@ -63,13 +63,9 @@ let db;
           `);
         }
 
-        console.log('Database connected and sample data inserted if necessary.');
     } catch (err) {
-        console.error('Database connection failed:', err.message);
+         throw new Error('Database connection failed: ' + err.message);
     }
 })();
 
 module.exports = app;
-
-
-  }
