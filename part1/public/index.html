@@ -111,15 +111,6 @@
           this.dogName = this.generateDogName();
           this.breedInfo = 'Mixed breed cutie';
         },
-        generateDogName() {
-          const names = [
-            'Buddy', 'Bella', 'Max', 'Luna', 'Charlie', 'Lucy', 'Cooper', 'Daisy',
-            'Rocky', 'Lola', 'Duke', 'Sadie', 'Tucker', 'Molly', 'Bear', 'Sophie',
-            'Oliver', 'Chloe', 'Zeus', 'Penny', 'Jack', 'Zoe', 'Bentley', 'Nala'
-          ];
-          return names[Math.floor(Math.random() * names.length)];
-        },
-
         handleImageError() {
           console.warn('Image failed to load, trying fallback');
           this.useFallbackImage();
