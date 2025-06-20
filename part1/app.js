@@ -1,3 +1,4 @@
+const mysql = require('mysql2/promise');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
@@ -67,9 +68,6 @@ let db;
         throw new Error('Database connection failed: ' + err.message);
   }
 })();
-
-
-app.use(express.static(path.join(__dirname, 'public')));
 
 module.exports = app;
 
