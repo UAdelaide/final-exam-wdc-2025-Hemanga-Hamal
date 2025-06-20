@@ -11,10 +11,10 @@ app.use(express.static(path.join(__dirname, '/public')));
 const session = require('express-session');
 
 app.use(session({
-    secret: process.env.SESSION_SECRET || 'dogwalk-secret',
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false } // Set to true if using HTTPS
+  secret: process.env.SESSION_SECRET || 'your-secret-key-here',
+  resave: false,
+  saveUninitialized: false,
+  cookie: { secure: false }
 }));
 
 
