@@ -18,7 +18,8 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
 // database connection setup
-
+let db;
+(async () => {
 
 app.use(express.static(path.join(__dirname, 'public')));
 
