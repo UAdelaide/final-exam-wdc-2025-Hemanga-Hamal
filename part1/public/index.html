@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Dog of the Day - Fixed Version</title>
   <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
   <style>
@@ -62,41 +62,9 @@
       display: inline-block;
     }
   </style>
-</head>
+<link rel="stylesheet" href="chrome-extension://ihcjicgdanjaechkgeegckofjjedodee/app/content-style.css"></head>
 <body>
-  <div id="app">
-    <h1 style="color: #ff00ff; text-shadow: 2px 2px 0 black;">Dog of the Day 🐶</h1>
-
-    <div v-if="loading" class="loading">Loading adorable dog...</div>
-
-    <div v-else-if="error" class="error">
-      {{ error }}
-    </div>
-
-    <div v-else>
-      <img
-
-        
-        :src="dogImage"
-        alt="Random Dog Picture"
-        class="dog-image"
-        @error="handleImageError"
-      />
-      <p>
-        Meet <strong>{{ dogName }}</strong>, today's featured pup!
-        <br>
-        <span class="extra-info">Breed: {{ breedInfo }}</span>
-      </p>
-    </div>
-
-    <button type="button" @click="fetchDogImage" :disabled="loading">
-      {{ loading ? 'Loading...' : 'Get New Dog!' }}
-    </button>
-
-    <p class="extra-info">
-      Click the button to see a new random dog picture!
-    </p>
-  </div>
+  <div id="app" data-v-app=""><h1 style="color: rgb(255, 0, 255); text-shadow: black 2px 2px 0px;">Dog of the Day 🐶</h1><div><img src="https://images.dog.ceo/breeds/puggle/IMG_124524.jpg" alt="Random Dog Picture" class="dog-image"><p> Meet <strong>Charlie</strong>, today's featured pup! <br><span class="extra-info">Breed: Puggle</span></p></div><button type="button">Get New Dog!</button><p class="extra-info"> Click the button to see a new random dog picture! </p></div>
 
   <script>
     const { createApp } = Vue;
@@ -116,7 +84,6 @@
           this.error = null;
 
           try {
-            // Try the Dog CEO API first
             const response = await fetch('https://dog.ceo/api/breeds/image/random');
 
             if (!response.ok) {
@@ -134,7 +101,6 @@
             }
           } catch (apiError) {
             console.warn('Dog CEO API failed, using fallback:', apiError);
-            // Fallback to a reliable dog image service
             this.useFallbackImage();
           } finally {
             this.loading = false;
@@ -142,15 +108,13 @@
         },
 
         useFallbackImage() {
-          // Using a more reliable service with CORS support
           const dogId = Math.floor(Math.random() * 1000) + 1;
-          this.dogImage = `https://picsum.photos/200/200?random=${dogId}`;
+          this.dogImage = https://picsum.photos/200/200?random=${dogId};
           this.dogName = this.generateDogName();
           this.breedInfo = 'Mixed breed cutie';
         },
 
         extractBreedInfo(imageUrl) {
-          // Extract breed from the URL path
           const urlParts = imageUrl.split('/');
           const breedIndex = urlParts.findIndex(part => part === 'breeds') + 1;
           if (breedIndex > 0 && breedIndex < urlParts.length) {
@@ -181,5 +145,5 @@
       }
     }).mount('#app');
   </script>
-</body>
-</html>
+
+</body></html>
