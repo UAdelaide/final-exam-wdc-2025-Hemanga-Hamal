@@ -22,7 +22,10 @@ let db;
 (async () => {
     try {
         //connect to the database
-        db = 
+        db = await mysql.createConnection({
+            host: 'localhost',
+            user: 'root',
+            
     }
 
 app.use(express.static(path.join(__dirname, 'public')));
