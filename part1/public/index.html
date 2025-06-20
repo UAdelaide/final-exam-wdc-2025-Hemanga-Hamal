@@ -37,10 +37,10 @@
       cursor: pointer;
     }
     .extra-info {
-      font-size: 5px; /* very small text */
+      font-size: 5px;
       color: yellow;
-      user-select: none; /* can’t copy */
-      pointer-events: none; /* text can’t be selected or focused */
+      user-select: none;
+      pointer-events: none;
     }
   </style>
 </head>
@@ -56,18 +56,13 @@
     aria-hidden="true"
     />
 
-
-    <!-- Hardcoded dog info that has no connection with the image -->
     <p>
       Meet <strong>Fluffy</strong>, the <em>invisible</em> dog!
       Age: <span class="extra-info">-100 years</span>
       Size: <span class="extra-info">Gigantic</span>
     </p>
 
-    <!-- Tiny button with unclear label -->
     <button type="button" @click="fetchDogImage" aria-label="Reload dog image">Go!</button>
-
-    <!-- Lots of redundant instructions -->
     <p class="extra-info">
       Click the green button above to see a new dog picture.
       Or don’t.
