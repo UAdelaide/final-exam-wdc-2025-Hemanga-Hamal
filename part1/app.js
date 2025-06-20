@@ -5,6 +5,7 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+const apit
 
 var app = express();
 
@@ -29,7 +30,7 @@ let db;
             database: 'dogwalks'
     });
 
-    
+
 
 app.use(express.static(path.join(__dirname, 'public')));
 
