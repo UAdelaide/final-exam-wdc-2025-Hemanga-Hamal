@@ -20,6 +20,10 @@ app.use('/users', usersRouter);
 // database connection setup
 let db;
 (async () => {
+    try {
+        //connect to the database
+        db = 
+    }
 
 app.use(express.static(path.join(__dirname, 'public')));
 
