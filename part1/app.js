@@ -33,7 +33,7 @@ let db;
     app.locals.db = db;
 
     //sample data because i am smart and this prac sucks
-    const [[{count;userCount}]] = await db.query('SELECT COUNT(*) AS userCount FROM users');
+    const [[{count;userCount}]] = await db.query('SELECT COUNT(*) AS userCount FROM Users');
 
 })();
 
