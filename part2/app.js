@@ -8,6 +8,14 @@ const app = express();
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '/public')));
 
+const session = require('express-session');
+
+app.use(session({
+    secret: process.env.SESSION_SECRET || 'dogwalk-secret',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false } // Set to true if using HTTPS
+}));
 
 
 // Routes
