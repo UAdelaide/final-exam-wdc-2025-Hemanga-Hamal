@@ -18,6 +18,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
 // database connection setup
+let db;
 
 
 module.exports = app;
